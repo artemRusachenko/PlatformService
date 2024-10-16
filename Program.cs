@@ -8,6 +8,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
 
+builder.Services.AddControllers();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
@@ -20,7 +22,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+//app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.MapControllers();
 
 PrepDb.PrepPopulation(app);
 
