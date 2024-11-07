@@ -1,3 +1,6 @@
+using AutoMapper;
+using CommandService.Data;
+using CommandService.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommandService.Controllers
@@ -6,10 +9,23 @@ namespace CommandService.Controllers
     [ApiController]
     public class PlatformsController : ControllerBase
     {
-        public PlatformsController()
+        private readonly ICommandRepo _repository;
+        private readonly IMapper _mapper;
+
+        public PlatformsController(ICommandRepo repo, IMapper mapper)
         {
-            
+            _repository = repo;
+            _mapper = mapper;
         }
+        [HttpGet]
+        public ActionResult<IEnumerable<PlatfromReadDto>> GetPlatforms(){
+            Console.WriteLine("--> Getting platforms from CommandService");
+
+            var platformItems = _repository.GetAllPlatforms();
+
+            return Ok(_mapper.Map<IEnumerable<PlatfromReadDto>>(platformItems));
+        }
+
         [HttpPost]
         public ActionResult TestInboundConnection()
         {
