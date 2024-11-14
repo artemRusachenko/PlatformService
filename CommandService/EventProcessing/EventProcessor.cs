@@ -22,7 +22,8 @@ namespace CommandService.EventProcessing
 
             switch (eventType){
                 case EventType.PlatformPublished:
-                    //
+                    addPlatform(message);
+                    Console.WriteLine("--> Platform already added");
                     break;
                 default:
                     break;

@@ -10,9 +10,9 @@ namespace CommandService.AsyncDataServices
     {
         private readonly IConfiguration _configuration;
         private readonly IEventProcessor _eventProcessor;
-        private  IConnection _connection;
-        private IModel _channel;
-        private string _queueName;
+        private IConnection? _connection;
+        private IModel? _channel;
+        private string? _queueName;
 
         public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor)
         {
@@ -33,7 +33,7 @@ namespace CommandService.AsyncDataServices
 
             Console.WriteLine("--> Listening on the Message Bus...");
 
-            _connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
+            _connection.ConnectionShutdown += RabbitMQ_ConnectionShitdown;
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -55,14 +55,14 @@ namespace CommandService.AsyncDataServices
             return Task.CompletedTask;
         }
 
-        private void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e){
+        private void RabbitMQ_ConnectionShitdown(object sender, ShutdownEventArgs e){
             Console.WriteLine("--> Connection Shutdown");
         }
 
         public override void Dispose(){
-            if(_channel.IsOpen){
+            if(_channel!.IsOpen){
                 _channel.Close();
-                _connection.Close();
+                _connection!.Close();
             }
 
             base.Dispose();
