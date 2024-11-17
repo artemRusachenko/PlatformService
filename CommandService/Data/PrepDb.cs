@@ -13,7 +13,7 @@ namespace CommandService.Data
 
                 var platforms = grpcClient.ReturnAllPlatforms();
 
-                SeedData(serviceScope.ServiceProvider.GetService<ICommandRepo>(), platforms);
+                SeedData(serviceScope.ServiceProvider.GetService<ICommandRepo>()!, platforms);
             }
         }
 
